@@ -28,7 +28,7 @@ Provide a high-level design or architecture of the solution you are proposing.
 
 | Group Member Name       | What is your contribution?        | Discussion Notes                                                                 |
 |-------------------------|-----------------------------------|----------------------------------------------------------------------------------|
-| Rasheed Omar            | Diagram Design, Development Decisions. | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure. |
-| Muhammad Ammar          | Diagram Design, Development Decisions. | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure. |
-| Zainulabdeen Aldawah    | Diagram Design, Development Decisions. | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure. |
-| Salim Sanogho           | Diagram Design, Development Decisions. | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure. |
+| Rasheed Omar            | Diagram Design, Development Decisions | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure |
+| Muhammad Ammar          | Diagram Design, Development Decisions | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure |
+| Zainulabdeen Aldawah    | Diagram Design, Development Decisions | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure |
+| Salim Sanogho           | Diagram Design, Development Decisions | Assisted in planning and designing the diagram, assisted in planning out the frameworks and programming structure |
