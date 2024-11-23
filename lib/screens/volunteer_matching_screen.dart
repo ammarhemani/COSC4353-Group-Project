@@ -1,155 +1,65 @@
+import 'package:cosc4353_volunteer_app/blocs/volunteer_matching/volunteer_matching_bloc.dart';
+import 'package:cosc4353_volunteer_app/models/event.dart';
+import 'package:cosc4353_volunteer_app/widgets/administrator_view_widget.dart';
+import 'package:cosc4353_volunteer_app/widgets/candidate_card.dart';
+import 'package:cosc4353_volunteer_app/widgets/event_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class VolunteerMatchingScreen extends StatelessWidget {
+class VolunteerMatchingScreen extends StatefulWidget {
   static const String id = 'volunteer_matching_screen';
-  const VolunteerMatchingScreen({super.key});
+  final Event event;
+  const VolunteerMatchingScreen({super.key, required this.event});
+
+  @override
+  State<VolunteerMatchingScreen> createState() => _VolunteerMatchingScreenState();
+}
+
+class _VolunteerMatchingScreenState extends State<VolunteerMatchingScreen> {
+  final VolunteerMatchingBloc _volunteerMatchingBloc = VolunteerMatchingBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _volunteerMatchingBloc.add(FetchPotentialCandidates(widget.event));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Volunteer Matching'),
-      ),
+      appBar: AppBar(title: Text('Volunteer Matching')),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: const [
-                    Icon(Icons.info_outline, size: 12),
-                    SizedBox(width: 4),
-                    Text("Only administrators can access this screen"),
-                  ],
-                ),
-              ),
-              SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: EdgeInsets.all(24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Event Name",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Event date: 09/16/2024",
-                            style: TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.pin_drop_outlined, size: 20),
-                          Text("Event location"),
-                        ],
-                      ),
-                      Text("Event Description"),
-                      Text("Required skills: Lorem ipsum"),
-                      Text("Urgency: high"),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Column(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: BlocBuilder<VolunteerMatchingBloc, VolunteerMatchingState>(
+              bloc: _volunteerMatchingBloc,
+              builder: (context, state) {
+                return Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.all(24.0),
-                      child: Text('Potential matches',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          )),
+                    AdministratorViewWidget(),
+                    SizedBox(height: 12),
+                    EventCard(event: widget.event),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(24.0),
+                          child: Text('Potential matches', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                        ),
+                        if (state is VolunteerMatchingLoading) Center(child: CircularProgressIndicator()),
+                        if (state is VolunteerMatchingLoaded)
+                          ListView.builder(
+                            itemCount: state.candidates.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => CandidateCard(state.candidates[index]),
+                          ),
+                      ],
                     ),
-                    Flexible(
-                      child: ListView.builder(
-                        itemCount: 12,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: Padding(
-                              padding: EdgeInsets.all(24.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Candidate Name",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  Text("Address"),
-                                  Text("State"),
-                                  Text("Zip code"),
-                                  Text("Skills"),
-                                  Text("Preferences"),
-                                  Text("Availability"),
-                                  Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 24,
-                                          backgroundColor: Colors.green,
-                                          child: Icon(Icons.check,
-                                              color: Colors.white),
-                                        ),
-                                        SizedBox(width: 24),
-                                        CircleAvatar(
-                                          radius: 24,
-                                          backgroundColor: Colors.red,
-                                          child: Icon(Icons.close,
-                                              color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-
-                    // Expanded(
-                    //   child: Container(
-                    //     margin:
-                    //         EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(12),
-                    //       color: Colors.grey[300],
-                    //     ),
-                    //     padding: EdgeInsets.all(32),
-                    //     child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.stretch,
-                    //       children: [
-                    //         CircleAvatar(
-                    //           radius: 32,
-                    //           backgroundColor: Colors.deepOrange[400],
-                    //           child: Text("AA"),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                   ],
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
         ),
       ),
