@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "816849395577",
+    "project_id": "cosc4353-c3920",
+    "storage_bucket": "cosc4353-c3920.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816849395577:android:8ed1030ae76535bda419a8",
+        "android_client_info": {
+          "package_name": "com.cosc4353.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCRfons5d0zSMEjfC_T96zaxk8-THjvpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
